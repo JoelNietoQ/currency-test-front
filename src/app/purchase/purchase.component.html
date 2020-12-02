@@ -1,0 +1,57 @@
+<div class="container">
+  <a [routerLink]="['/quote']">Quote</a>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Currency</th>
+        <th>Purchase</th>
+        <th>Sell</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="brlExchange | async; let value">
+        <td scope="row">BRL</td>
+        <td>{{ value[0] }}</td>
+        <td>{{ value[1] }}</td>
+        <td>{{ value[2] }}</td>
+      </tr>
+      <tr *ngIf="usdExchange | async; let value">
+        <td scope="row">USD</td>
+        <td>{{ value[0] }}</td>
+        <td>{{ value[1] }}</td>
+        <td>{{ value[2] }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)="getExchange()">Refresh</button>
+
+  <form (ngSubmit)="purchase()">
+    <div class="form-group">
+      <label for="user-id">UserId</label>
+      <input type="number" [(ngModel)]="transaction.userId" name="user-id" id="user-id" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label  for="currency">Currency</label>
+      <select [(ngModel)]="transaction.currency" class="form-control" name="currency" id="currency">
+        <option>USD</option>
+        <option>BRL</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="amount">Amount</label>
+      <input type="number" [(ngModel)]="transaction.amount" name="amount" id="amount" class="form-control" />
+    </div>
+    <button type="submit">Save</button>
+    <div *ngIf="loading" class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </form>
+  <div *ngIf="result" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Transaction done</strong> Currency: {{ result.currency }} / Amount: {{ result.amount }} / Result: {{ result.result }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>

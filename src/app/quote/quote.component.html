@@ -1,0 +1,29 @@
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Currency</th>
+        <th>Purchase</th>
+        <th>Sell</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="brlExchange | async; let value">
+        <td scope="row">BRL</td>
+        <td>{{ value[0] }}</td>
+        <td>{{ value[1] }}</td>
+        <td>{{ value[2] }}</td>
+      </tr>
+      <tr *ngIf="usdExchange | async; let value">
+        <td scope="row">USD</td>
+        <td>{{ value[0] }}</td>
+        <td>{{ value[1] }}</td>
+        <td>{{ value[2] }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <button (click)="getExchange()">Refresh</button>
+</div> <a [routerLink]="['/purchase']">Purchase</a>
+
